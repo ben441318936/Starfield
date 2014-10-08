@@ -17,6 +17,8 @@ public class Starfield extends PApplet {
 public static int num=200;
 Particle firework[]=new Particle[num+1];
 int counter=0;
+boolean launch=false;
+boolean explode=false;
 public void setup()
 {
 	size(500,500);
@@ -35,9 +37,12 @@ public void draw()
 	rect(0,0,width,height);
 	for(int i=0;i<num+1;i++)
 	{
-		if(firework[i] instanceof NormalParticle)
+		if (explode==true)
 		{
-			((NormalParticle)firework[i]).reCenter();
+			if(firework[i] instanceof NormalParticle)
+			{
+				((NormalParticle)firework[i]).reCenter();
+			}
 		}
 		firework[i].move();
 		firework[i].show();
@@ -148,7 +153,7 @@ interface Particle
 
 public void mousePressed()
 {
-	//derp.angle=(Math.random()*2)*Math.PI;
+	launch=true;
 }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "Starfield" };

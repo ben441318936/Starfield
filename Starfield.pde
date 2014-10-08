@@ -21,7 +21,7 @@ void draw()
 	rect(0,0,width,height);
 	for(int i=0;i<num+1;i++)
 	{
-		if (explode==ture)
+		if (explode==true)
 		{
 			if(firework[i] instanceof NormalParticle)
 			{
