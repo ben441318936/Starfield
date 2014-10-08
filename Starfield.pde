@@ -1,7 +1,8 @@
-int num=200;
-NormalParticle firework[]=new NormalParticle[num];
-//OddballParticle derp=new OddballParticle(250,250);
+public static int num=200;
+Particle firework[]=new Particle[num+1];
 int counter=0;
+boolean launch=false;
+boolean explode=false;
 void setup()
 {
 	size(500,500);
@@ -10,6 +11,7 @@ void setup()
 	{
 		firework[i]=new NormalParticle(width/2,height/2);
 	}
+	firework[num]=new OddballParticle(width/2,height);
 }
 void draw()
 {
@@ -17,25 +19,31 @@ void draw()
 	noStroke();
 	fill(0, 50);
 	rect(0,0,width,height);
-	for(int i=0;i<num;i++)
+	for(int i=0;i<num+1;i++)
 	{
+		if (explode==ture)
+		{
+			if(firework[i] instanceof NormalParticle)
+			{
+				((NormalParticle)firework[i]).reCenter();
+			}
+		}
 		firework[i].move();
-		firework[i].reCenter();
 		firework[i].show();
 	}
-	/*derp.bounce();
-	derp.move();
-	derp.show();*/
-	if(counter>=151)
+	if(counter>=170)
 	{
-		for(int i=0;i<num;i++)
+		for(int i=0;i<num+1;i++)
 		{
-			firework[i].reFire();
+			if(firework[i] instanceof NormalParticle)
+			{
+				((NormalParticle)firework[i]).reFire();
+			}			
 		}
 		counter=0;
 	}
 }
-class NormalParticle
+class NormalParticle implements Particle
 {
 	double xPosition,yPosition,angle,speed;
 	color c;
@@ -47,12 +55,12 @@ class NormalParticle
 		speed=Math.random()*10;
 		c= color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
 	}
-	void move()
+	public void move()
 	{
 		xPosition=Math.cos(angle)*speed+xPosition;
 		yPosition=Math.sin(angle)*speed+yPosition;
 	}
-	void show()
+	public void show()
 	{
 		noStroke();
 		fill(c);
@@ -85,7 +93,7 @@ class NormalParticle
 	}
 }
 
-/*class OddballParticle
+class OddballParticle implements Particle
 {
 	double xPosition,yPosition,angle,speed;
 	color c;
@@ -93,16 +101,16 @@ class NormalParticle
 	{
 		xPosition=x;
 		yPosition=y;
-		angle=(Math.random()*2)*Math.PI;
+		angle=3*Math.PI/2;
 		speed=10;
 		c= color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
 	}
-	void move()
+	public void move()
 	{
 		xPosition=Math.cos(angle)*speed+xPosition;
 		yPosition=Math.sin(angle)*speed+yPosition;
 	}
-	void show()
+	public void show()
 	{
 		noStroke();
 		fill(255);
@@ -119,14 +127,15 @@ class NormalParticle
 			angle=-angle;
 		}
 	}
-}*/
+}
 
 interface Particle
 {
-	//your code here
+	public void move();
+	public void show();
 }
 
 void mousePressed()
 {
-	derp.angle=(Math.random()*2)*Math.PI;
+	launch=true;
 }
