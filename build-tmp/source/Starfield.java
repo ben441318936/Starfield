@@ -14,14 +14,15 @@ import java.io.IOException;
 
 public class Starfield extends PApplet {
 
-public static int num=200;
+public static int num=100;
 Particle firework[]=new Particle[num+1];
-int counter=0;
+float counter=0;
 boolean launch=false;
 boolean explode=false;
+float opacity=30;
 public void setup()
 {
-	size(500,500);
+	size(1000,1000);
 	background(0);
 	for(int i=0;i<num;i++)
 	{
@@ -31,32 +32,21 @@ public void setup()
 }
 public void draw()
 {
-	//background(0);
-	noStroke();
-	fill(0, 50);
-	rect(0,0,width,height);
-	for(int i=0;i<num+1;i++)
+	if(launch==true)
 	{
-		if (explode==true)
-		{
-			if(firework[i] instanceof NormalParticle)
-			{
-				((NormalParticle)firework[i]).reCenter();
-			}
-		}
-		firework[i].move();
-		firework[i].show();
-	}
-	if(counter>=170)
-	{
+		noStroke();
+		fill(0, opacity);
+		rect(0,0,width,height);
 		for(int i=0;i<num+1;i++)
 		{
-			if(firework[i] instanceof NormalParticle)
-			{
-				((NormalParticle)firework[i]).reFire();
-			}			
+			firework[i].move();
+			firework[i].show();
+			((OddballParticle)firework[num]).reachCenter();
 		}
-		counter=0;
+		if(counter>=30*(num/100))
+		{
+			opacity=counter*(100.0f/num);
+		}
 	}
 }
 class NormalParticle implements Particle
@@ -68,13 +58,21 @@ class NormalParticle implements Particle
 		xPosition=x;
 		yPosition=y;
 		angle=(Math.random()*2)*Math.PI;
-		speed=Math.random()*10;
-		c= color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
+		speed=0;
+		c=0;
 	}
 	public void move()
 	{
 		xPosition=Math.cos(angle)*speed+xPosition;
 		yPosition=Math.sin(angle)*speed+yPosition;
+		if (xPosition<0 || xPosition>width)
+		{
+			counter++;
+		}
+		if (yPosition<0 || yPosition>height)
+		{
+			counter++;
+		}
 	}
 	public void show()
 	{
@@ -82,33 +80,20 @@ class NormalParticle implements Particle
 		fill(c);
 		ellipse((float)(xPosition),(float)(yPosition),3,3);
 	}
-	
 	public void reCenter()
 	{
-		if (xPosition<0 || xPosition>width)
-		{
-			xPosition=width/2;
-			yPosition=height/2;
-			angle=(Math.random()*2)*Math.PI;
-			speed=0;
-			counter++;
-		}
-		if (yPosition<0 || yPosition>height)
-		{
-			xPosition=width/2;
-			yPosition=height/2;
-			angle=(Math.random()*2)*Math.PI;
-			speed=0;
-			counter++;
-		}
+		xPosition=width/2;
+		yPosition=height/2;
+		angle=(Math.random()*2)*Math.PI;
+		speed=0;
+		c=0;
 	}
-	public void reFire()
+	public void fire()
 	{
 		speed=Math.random()*10;
-
+		c= color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
 	}
 }
-
 class OddballParticle implements Particle
 {
 	double xPosition,yPosition,angle,speed;
@@ -119,7 +104,7 @@ class OddballParticle implements Particle
 		yPosition=y;
 		angle=3*Math.PI/2;
 		speed=10;
-		c= color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
+		c= 255;
 	}
 	public void move()
 	{
@@ -129,30 +114,56 @@ class OddballParticle implements Particle
 	public void show()
 	{
 		noStroke();
-		fill(255);
+		fill(c);
 		ellipse((float)(xPosition),(float)(yPosition),10,10);
 	}
-	public void bounce()
+	public void reachCenter()
 	{
-		if (xPosition<=0 || xPosition>=500)
+		if(yPosition<=height/2)
 		{
-			angle=180-angle;
-		}
-		if (yPosition<=0 || yPosition>=500)
-		{
-			angle=-angle;
+			xPosition=width/2;
+			yPosition=height;
+			speed=0;
+			c=0;
+			explode();
 		}
 	}
 }
-
 interface Particle
 {
 	public void move();
 	public void show();
 }
-
+public void explode()
+{
+	for(int i=0;i<num+1;i++)
+	{
+		if(firework[i] instanceof NormalParticle)
+		{
+			((NormalParticle)firework[i]).fire();
+		}
+	}
+}
 public void mousePressed()
 {
+	background(0);
+	counter=0;
+	opacity=30;
+	if(launch==true)
+	{
+		for(int i=0;i<num+1;i++)
+		{
+			if(firework[i] instanceof NormalParticle)
+			{
+				((NormalParticle)firework[i]).reCenter();
+			}
+			if(firework[i] instanceof OddballParticle)
+			{
+				((OddballParticle)firework[i]).c=255;
+				((OddballParticle)firework[i]).speed=10;
+			}
+		}
+	}
 	launch=true;
 }
   static public void main(String[] passedArgs) {
