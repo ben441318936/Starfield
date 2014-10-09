@@ -130,7 +130,6 @@ void explode()
 }
 void mousePressed()
 {
-	background(0);
 	counter=0;
 	opacity=30;
 	if(launch==true)
