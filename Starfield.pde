@@ -1,4 +1,4 @@
-public static int num=200;
+int num=200;
 Particle firework[]=new Particle[num+1];
 float counter=0;
 boolean launch=false;
