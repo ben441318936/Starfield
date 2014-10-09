@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class Starfield extends PApplet {
 
-public static int num=100;
+public static int num=200;
 Particle firework[]=new Particle[num+1];
 float counter=0;
 boolean launch=false;
@@ -22,7 +22,7 @@ boolean explode=false;
 float opacity=30;
 public void setup()
 {
-	size(1000,1000);
+	size(500,500);
 	background(0);
 	for(int i=0;i<num;i++)
 	{
