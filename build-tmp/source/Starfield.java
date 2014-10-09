@@ -14,12 +14,12 @@ import java.io.IOException;
 
 public class Starfield extends PApplet {
 
-int num=200;
+public static int num=200;
 Particle firework[]=new Particle[num+1];
 float counter=0;
 boolean launch=false;
 boolean explode=false;
-float opacity=30;
+float opac=30;
 public void setup()
 {
 	size(500,500);
@@ -35,7 +35,7 @@ public void draw()
 	if(launch==true)
 	{
 		noStroke();
-		fill(0, opacity);
+		fill(0, opac);
 		rect(0,0,width,height);
 		for(int i=0;i<num+1;i++)
 		{
@@ -45,7 +45,7 @@ public void draw()
 		}
 		if(counter>=30*(num/100))
 		{
-			opacity=counter*(100.0f/num);
+			opac=counter*(100.0f/num);
 		}
 	}
 }
@@ -147,7 +147,7 @@ public void explode()
 public void mousePressed()
 {
 	counter=0;
-	opacity=30;
+	opac=30;
 	if(launch==true)
 	{
 		for(int i=0;i<num+1;i++)

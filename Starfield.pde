@@ -3,7 +3,7 @@ Particle firework[]=new Particle[num+1];
 float counter=0;
 boolean launch=false;
 boolean explode=false;
-float opacity=30;
+float opac=30;
 void setup()
 {
 	size(500,500);
@@ -19,7 +19,7 @@ void draw()
 	if(launch==true)
 	{
 		noStroke();
-		fill(0, opacity);
+		fill(0, opac);
 		rect(0,0,width,height);
 		for(int i=0;i<num+1;i++)
 		{
@@ -29,7 +29,7 @@ void draw()
 		}
 		if(counter>=30*(num/100))
 		{
-			opacity=counter*(100.0/num);
+			opac=counter*(100.0/num);
 		}
 	}
 }
@@ -131,7 +131,7 @@ void explode()
 void mousePressed()
 {
 	counter=0;
-	opacity=30;
+	opac=30;
 	if(launch==true)
 	{
 		for(int i=0;i<num+1;i++)
