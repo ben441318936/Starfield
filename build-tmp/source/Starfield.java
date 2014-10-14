@@ -90,7 +90,9 @@ class NormalParticle implements Particle
 	}
 	public void fire()
 	{
-		speed=Math.random()*10;
+		xPosition=((OddballParticle)firework[num]).xPosition;
+		yPosition=((OddballParticle)firework[num]).yPosition;
+		speed=Math.random()*10+1;
 		c= color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
 	}
 }
@@ -102,7 +104,7 @@ class OddballParticle implements Particle
 	{
 		xPosition=x;
 		yPosition=y;
-		angle=3*Math.PI/2;
+		angle=Math.random()+4*(Math.PI/3);
 		speed=10;
 		c= 255;
 	}
@@ -121,11 +123,11 @@ class OddballParticle implements Particle
 	{
 		if(yPosition<=height/2)
 		{
-			xPosition=width/2;
-			yPosition=height;
 			speed=0;
 			c=0;
 			explode();
+			xPosition=width/2;
+			yPosition=height;
 		}
 	}
 }
@@ -160,6 +162,7 @@ public void mousePressed()
 			{
 				((OddballParticle)firework[i]).c=255;
 				((OddballParticle)firework[i]).speed=10;
+				((OddballParticle)firework[i]).angle=Math.random()+4*(Math.PI/3);
 			}
 		}
 	}
