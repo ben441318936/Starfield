@@ -96,6 +96,11 @@ class OddballParticle implements Particle
 	{
 		xPosition=Math.cos(angle)*speed+xPosition;
 		yPosition=Math.sin(angle)*speed+yPosition;
+		if (angle<(3*Math.PI/2))
+		{
+			angle=angle-0.001;
+		}
+		else if ()
 	}
 	public void show()
 	{
