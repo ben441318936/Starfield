@@ -147,7 +147,7 @@ void explode()
 }
 void startLoop()
 {
-	if(counter>=2000)
+	if(counter>=3000)
 	{
 		if(launch==true)
 		{
