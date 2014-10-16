@@ -2,7 +2,6 @@ public static int num=200;
 Particle firework[]=new Particle[num+1];
 float counter=0;
 boolean launch=false;
-boolean explode=false;
 float opac=30;
 void setup()
 {
@@ -16,6 +15,7 @@ void setup()
 }
 void draw()
 {
+	startLoop();
 	if(launch==true)
 	{
 		noStroke();
@@ -96,11 +96,17 @@ class OddballParticle implements Particle
 	{
 		xPosition=Math.cos(angle)*speed+xPosition;
 		yPosition=Math.sin(angle)*speed+yPosition;
-		if (angle<(3*Math.PI/2))
+		if(speed != 0)
 		{
-			angle=angle-0.001;
+			if (angle<(3*Math.PI/2))
+			{
+			angle=angle-0.005;
+			}
+			else if (angle>(3*Math.PI/2))
+			{
+				angle=angle+0.005;
+			}
 		}
-		else if ()
 	}
 	public void show()
 	{
@@ -110,7 +116,7 @@ class OddballParticle implements Particle
 	}
 	void reachCenter()
 	{
-		if(yPosition<=height/2)
+		if((yPosition<=height-350) || (xPosition<=100) || (xPosition>=400))
 		{
 			speed=0;
 			c=0;
@@ -135,25 +141,37 @@ void explode()
 		}
 	}
 }
-void mousePressed()
+void startLoop()
 {
-	counter=0;
-	opac=30;
-	if(launch==true)
+	if(counter==190)
 	{
-		for(int i=0;i<num+1;i++)
+		if(launch==true)
 		{
-			if(firework[i] instanceof NormalParticle)
+			for(int i=0;i<num+1;i++)
 			{
-				((NormalParticle)firework[i]).reCenter();
-			}
-			if(firework[i] instanceof OddballParticle)
-			{
-				((OddballParticle)firework[i]).c=255;
-				((OddballParticle)firework[i]).speed=10;
-				((OddballParticle)firework[i]).angle=Math.random()+4*(Math.PI/3);
+				if(firework[i] instanceof NormalParticle)
+				{
+					((NormalParticle)firework[i]).reCenter();
+				}
+				if(firework[i] instanceof OddballParticle)
+				{
+					((OddballParticle)firework[i]).c=255;
+					if(((OddballParticle)firework[i]).speed==0)
+					{
+						((OddballParticle)firework[i]).angle=Math.random()+4*(Math.PI/3);
+					}
+					((OddballParticle)firework[i]).speed=10;
+				}
 			}
 		}
+		counter=0;
+		opac=30;
 	}
-	launch=true;
+	if(launch==false)
+	{
+		if (mousePressed==true)
+		{
+			launch=true;
+		}
+	}
 }
