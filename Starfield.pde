@@ -49,11 +49,7 @@ class NormalParticle implements Particle
 	{
 		xPosition=Math.cos(angle)*speed+xPosition;
 		yPosition=Math.sin(angle)*speed+yPosition;
-		if (xPosition<0 || xPosition>width)
-		{
-			counter++;
-		}
-		if (yPosition<0 || yPosition>height)
+		if (xPosition<0 || xPosition>width || yPosition<0 || yPosition>height)
 		{
 			counter++;
 		}
@@ -88,6 +84,14 @@ class OddballParticle implements Particle
 	{
 		xPosition=x;
 		yPosition=y;
+		angle=Math.random()+4*(Math.PI/3);
+		speed=10;
+		c= 255;
+	}
+	void reset()
+	{
+		xPosition=width/2;
+		yPosition=height;
 		angle=Math.random()+4*(Math.PI/3);
 		speed=10;
 		c= 255;
@@ -143,7 +147,7 @@ void explode()
 }
 void startLoop()
 {
-	if(counter==190)
+	if(counter>=2000)
 	{
 		if(launch==true)
 		{
@@ -167,11 +171,8 @@ void startLoop()
 		counter=0;
 		opac=30;
 	}
-	if(launch==false)
-	{
-		if (mousePressed==true)
-		{
-			launch=true;
-		}
-	}
+}
+void mouseClicked()
+{	
+	launch=!launch;
 }
