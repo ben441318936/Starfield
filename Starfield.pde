@@ -1,5 +1,4 @@
-@pjs preload="att-park.jpg";
-PImage img;
+PImage img=loadImage("att-park.jpg");
 public static int num=100;
 Particle firework1[]=new Particle[num+1];
 Particle firework2[]=new Particle[num+1];
@@ -11,7 +10,6 @@ float opac=30;
 boolean beginLoop=false;
 void setup()
 {
-	img=loadImage("att-park.jpg");
 	size(640,427);
 	background(0);
 	for(int i=0;i<num;i++)
