@@ -37,7 +37,6 @@ void draw()
 		noStroke();
 		image(img,0,0);
 		tint(255,opac);
-
 		if(launch1==true)
 		{
 			for(int i=0;i<num+1;i++)
