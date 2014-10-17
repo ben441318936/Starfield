@@ -14,6 +14,8 @@ import java.io.IOException;
 
 public class Starfield extends PApplet {
 
+//@pjs preload="att-park.jpg";
+PImage img;
 public static int num=100;
 Particle firework1[]=new Particle[num+1];
 Particle firework2[]=new Particle[num+1];
@@ -25,7 +27,8 @@ float opac=30;
 boolean beginLoop=false;
 public void setup()
 {
-	size(500,500);
+	img=loadImage("att-park.jpg");
+	size(640,427);
 	background(0);
 	for(int i=0;i<num;i++)
 	{
@@ -37,6 +40,7 @@ public void setup()
 		firework2[i]=new NormalParticle(width/2,height/2,2);
 	}
 	firework2[num]=new OddballParticle(width/2,height,2);
+	image(img,0,0);
 	textAlign(CENTER);
 	textSize(36);
 	text("Click on the screen!", width/2, height/2);
@@ -47,6 +51,7 @@ public void draw()
 	{
 		startLoop();
 		noStroke();
+		image(img,0,0);
 		fill(0, opac);
 		rect(0,0,width,height);
 		if(launch1==true)
@@ -190,7 +195,7 @@ class OddballParticle implements Particle
 	}
 	public void reachCenter()
 	{
-		if((yPosition<=height-350) || (xPosition<=100) || (xPosition>=400))
+		if((yPosition<=height-350) || (xPosition<=100) || (xPosition>=width-100))
 		{
 			speed=0;
 			c=0;
