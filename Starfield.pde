@@ -21,15 +21,18 @@ void setup()
 		firework2[i]=new NormalParticle(width/2,height/2,2);
 	}
 	firework2[num]=new OddballParticle(width/2,height,2);
+	textAlign(CENTER);
+	textSize(36);
+	text("Click on the screen!", width/2, height/2);
 }
 void draw()
 {
-	startLoop();
-	noStroke();
-	fill(0, opac);
-	rect(0,0,width,height);
 	if(beginLoop==true)
 	{
+		startLoop();
+		noStroke();
+		fill(0, opac);
+		rect(0,0,width,height);
 		if(launch1==true)
 		{
 			for(int i=0;i<num+1;i++)
