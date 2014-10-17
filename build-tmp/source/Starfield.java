@@ -14,6 +14,7 @@ import java.io.IOException;
 
 public class Starfield extends PApplet {
 
+/*@pjs preload="att-park.jpg";*/
 PImage img;
 public static int num=100;
 Particle firework1[]=new Particle[num+1];
