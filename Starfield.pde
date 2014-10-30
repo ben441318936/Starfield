@@ -20,13 +20,13 @@ void setup()
         firework1[i]=new NormalParticle(1);
     }
     firework1[num]=new OddballParticle(width/2,height,1);
-    firework1[1]=new jumbo(1);
+    //firework1[1]=new jumbo(1);
     for(int i=0;i<num;i++)
     {
         firework2[i]=new NormalParticle(2);
     }
     firework2[num]=new OddballParticle(width/2,height,2);
-    firework2[1]=new jumbo(2);
+    //firework2[1]=new jumbo(2);
     image(img,0,0);
     textAlign(CENTER);
     textSize(36);
